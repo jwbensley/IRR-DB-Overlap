@@ -1,0 +1,13 @@
+file,found,not-found
+data/extracted/inetnum/afrinic.db,16,1254624
+data/extracted/inetnum/arin.db,0,1254640
+data/extracted/inetnum/jpirr.db,0,1254640
+data/extracted/inetnum/jpnic.db,2447,1252193
+data/extracted/inetnum/krnic.db,4780,1249860
+data/extracted/inetnum/lacnic.db,0,1254640
+data/extracted/inetnum/nicbr-asn-blk-latest.txt,0,1254640
+data/extracted/inetnum/nttcom.db,0,1254640
+data/extracted/inetnum/radb.db,0,1254640
+data/extracted/inetnum/ripe.db.inetnum,1192,1253448
+data/extracted/inetnum/tc.db,0,1254640
+data/extracted/inetnum/twnic.db,141,1254499

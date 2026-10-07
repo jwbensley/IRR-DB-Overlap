@@ -1,0 +1,13 @@
+file,found,not-found
+data/extracted/route6/afrinic.db,158,198598
+data/extracted/route6/apnic.db.route6,10935,187821
+data/extracted/route6/arin.db,9348,189408
+data/extracted/route6/jpirr.db,283,198473
+data/extracted/route6/jpnic.db,0,198756
+data/extracted/route6/krnic.db,0,198756
+data/extracted/route6/lacnic.db,1574,197182
+data/extracted/route6/nicbr-asn-blk-latest.txt,7677,191079
+data/extracted/route6/nttcom.db,3100,195656
+data/extracted/route6/ripe.db.route6,4741,194015
+data/extracted/route6/tc.db,6437,192319
+data/extracted/route6/twnic.db,0,198756

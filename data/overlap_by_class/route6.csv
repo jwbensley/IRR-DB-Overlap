@@ -1,0 +1,14 @@
+file,afrinic.db,apnic.db,arin.db,jpirr.db,jpnic.db,krnic.db,lacnic.db,nicbr-asn-blk-latest.txt,nttcom.db,radb.db,ripe.db,tc.db,twnic.db
+afrinic.db,,0,0,0,0,0,0,0,1,158,0,0,0
+apnic.db,0,,0,24,0,0,0,0,363,10935,0,0,0
+arin.db,0,0,,0,0,0,0,0,19,9348,0,0,0
+jpirr.db,0,24,0,,0,0,0,0,162,283,29,0,0
+jpnic.db,0,0,0,0,,0,0,0,0,0,0,0,0
+krnic.db,0,0,0,0,0,,0,0,0,0,0,0,0
+lacnic.db,0,0,0,0,0,0,,0,18,1574,0,0,0
+nicbr-asn-blk-latest.txt,0,0,0,0,0,0,0,,304,7677,0,4997,0
+nttcom.db,1,363,19,162,0,0,18,304,,3100,61,270,0
+radb.db,158,10935,9348,283,0,0,1574,7677,3100,,4741,6437,0
+ripe.db,0,0,0,29,0,0,0,0,61,4741,,0,0
+tc.db,0,0,0,0,0,0,0,4997,270,6437,0,,0
+twnic.db,0,0,0,0,0,0,0,0,0,0,0,0,

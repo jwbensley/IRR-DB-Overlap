@@ -1,0 +1,13 @@
+file,found,not-found
+data/extracted/as-set/afrinic.db,8,5546
+data/extracted/as-set/arin.db,34,5520
+data/extracted/as-set/jpirr.db,1,5553
+data/extracted/as-set/jpnic.db,0,5554
+data/extracted/as-set/krnic.db,0,5554
+data/extracted/as-set/lacnic.db,0,5554
+data/extracted/as-set/nicbr-asn-blk-latest.txt,0,5554
+data/extracted/as-set/nttcom.db,22,5532
+data/extracted/as-set/radb.db,268,5286
+data/extracted/as-set/ripe.db.as-set,103,5451
+data/extracted/as-set/tc.db,1,5553
+data/extracted/as-set/twnic.db,0,5554

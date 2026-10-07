@@ -1,0 +1,7 @@
+data/extracted/
+data/jpirr_dupes/
+data/packed/
+data/unpacked/
+__pycache__/
+venv/
+.venv/

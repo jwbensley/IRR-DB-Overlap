@@ -1,0 +1,13 @@
+file,found,not-found
+data/extracted/aut-num/afrinic.db,6,569
+data/extracted/aut-num/apnic.db.aut-num,133,442
+data/extracted/aut-num/arin.db,30,545
+data/extracted/aut-num/jpirr.db,78,497
+data/extracted/aut-num/jpnic.db,118,457
+data/extracted/aut-num/krnic.db,3,572
+data/extracted/aut-num/lacnic.db,37,538
+data/extracted/aut-num/nicbr-asn-blk-latest.txt,0,575
+data/extracted/aut-num/radb.db,141,434
+data/extracted/aut-num/ripe.db.aut-num,8,567
+data/extracted/aut-num/tc.db,5,570
+data/extracted/aut-num/twnic.db,0,575

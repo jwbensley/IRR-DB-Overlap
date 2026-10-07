@@ -1,0 +1,13 @@
+file,found,not-found
+data/extracted/route-set/afrinic.db,6,2716
+data/extracted/route-set/apnic.db.route-set,13,2709
+data/extracted/route-set/jpirr.db,0,2722
+data/extracted/route-set/jpnic.db,0,2722
+data/extracted/route-set/krnic.db,0,2722
+data/extracted/route-set/lacnic.db,0,2722
+data/extracted/route-set/nicbr-asn-blk-latest.txt,0,2722
+data/extracted/route-set/nttcom.db,2,2720
+data/extracted/route-set/radb.db,104,2618
+data/extracted/route-set/ripe.db.route-set,29,2693
+data/extracted/route-set/tc.db,0,2722
+data/extracted/route-set/twnic.db,0,2722
