@@ -48,7 +48,7 @@ Per data source info:
   * The data in this export isn't mirrored into LACNIC's public servers and it's not in LACNIC's data exports. For example, choose a random route object, you won't see it via LACNIC's whois server `whois -h whois.lacnic.net 45.4.4.0/22` nor routing registry `whois -h irr.lacnic.net 45.4.4.0/22`, but there inetnum/inet6nums are returned by whois.lacnic.net for the route/route6 objects.
   * Data pulled from NICBR is not in the standard RSPL format so it is translated into standard RPSL format by the script which downloads it.
 * RADB: Non-authoritative 3rd party DB. Their data export contains as-set, aut-num, inet6num, inetnum, mntner, route-set, route, and route6 objects (routing policy and resource allocations).
-  * Mirrored / imported by anyone   ################################################################
+  * RADB data is not included in any other data exports. It is a standalone database with special historical significance. It is included here because it has significant overlap with some of the RIRs and NIRs.
 * TC: NIR for Brazil. Their data export contains as-set, aut-num, inet6num, inetnum, mntner, route, route6, and route-set objects (routing policy and resource allocations).
   * Some of the data in this export is mirrored into LACNIC's public server, but none of it is in LACNIC's data exports. For example, choose a random resource allocation like an aut-num or inetnum and you'll see in via LACNIC's public server `whois -h irr.lacnic.net AS16735`.
 * TWNIC: NIR for Taiwan. Their data export contains inetnum and inet6nums objects (resource allocations but not routing policy).
