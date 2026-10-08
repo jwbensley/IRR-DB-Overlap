@@ -14,7 +14,6 @@ irr_files=(
     "krnic.db"
     "lacnic.db"
     "nicbr-asn-blk-latest.txt"
-    "nttcom.db"
     "radb.db"
     "ripe.db"
     "tc.db"

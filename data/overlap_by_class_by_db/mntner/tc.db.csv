@@ -1,0 +1,12 @@
+file,found,not-found
+data/extracted/mntner/afrinic.db,0,5848
+data/extracted/mntner/apnic.db.mntner,0,5848
+data/extracted/mntner/arin.db,0,5848
+data/extracted/mntner/jpirr.db,0,5848
+data/extracted/mntner/jpnic.db,0,5848
+data/extracted/mntner/krnic.db,0,5848
+data/extracted/mntner/lacnic.db,0,5848
+data/extracted/mntner/nicbr-asn-blk-latest.txt,0,5848
+data/extracted/mntner/radb.db,128,5720
+data/extracted/mntner/ripe.db.mntner,8,5840
+data/extracted/mntner/twnic.db,0,5848

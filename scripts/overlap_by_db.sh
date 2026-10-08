@@ -1,97 +1,70 @@
 #!/bin/bash
 
-# This script creates a CSV per-class-per-DB.
-# Each CSV records how many of the RSPL keys in the local DB is found in all other DBs.
+# This script reads in all the CSV files in data/overlap_by_class_by_db/*/*.csv and creates combined overlap matrixes in data/overlap_by_db/
+# One matrix CSV is created per DB. Each row is another DB and each column is a class,
+# the cell value is the percentage of the local DB's RPSL keys of that class which were found in the row DB.
+# A DB isn't compared to itself, so the cells in its own row are left empty. Cells are also left
+# empty when the local DB has no keys for the class, as there is no percentage to calculate.
 
 set -eu
+shopt -s nullglob
 
-# shellcheck source=SCRIPTDIR/irr_lists.sh
-source "$(dirname "${BASH_SOURCE[0]}")/irr_lists.sh"
+INPUT_DIR="data/overlap_by_class_by_db"
+OUTPUT_DIR="data/overlap_by_db"
+rm -rf "$OUTPUT_DIR" || exit 1
+mkdir -p "$OUTPUT_DIR" || exit 1
 
-INPUT_DIR="data/extracted"
-BASE_OUTPUT_DIR="data/overlap_by_db"
-rm -rf "$BASE_OUTPUT_DIR" || exit 1
-mkdir -p "$BASE_OUTPUT_DIR" || exit 1
+CSV_FILES=("${INPUT_DIR}"/*/*.csv)
+if [ "${#CSV_FILES[@]}" -eq 0 ]; then
+    echo "No CSV files found in $INPUT_DIR" >&2
+    exit 1
+fi
 
-# Runs one class to completion; invoked as a background job so
-# all classes execute in parallel instead of one after another.
-check_class() {
-    local CLASS="$1"
-    local OUTPUT_DIR A_FILE A_FILE_PATH B_FILE B_FILE_PATH FOUND NOT_FOUND
+echo "Creating matrixes for all DBs"
 
-    echo "Comparing $CLASS"
+# Some sources are split per class, e.g. apnic.db.as-set, so strip the
+# class suffix to keep the DB names consistent across all matrixes.
+# LC_NUMERIC=C ensures a "." decimal separator, a "," would break the CSV.
+LC_NUMERIC=C awk -F, -v out_dir="$OUTPUT_DIR" '
+    function db_name(path, class) {
+        sub(/.*\//, "", path)
+        sub(/\.csv$/, "", path)
+        sub("\\." class "$", "", path)
+        return path
+    }
+    # found + not-found is the total number of keys of this class in the local DB.
+    function percent(found, not_found) {
+        if (found + not_found == 0) return ""
+        return sprintf("%.2f", found * 100 / (found + not_found))
+    }
+    FNR == 1 {
+        # The parent directory of each input CSV is the class name.
+        class = FILENAME
+        sub(/\/[^\/]*$/, "", class)
+        sub(/.*\//, "", class)
+        if (!(class in class_seen)) { class_seen[class] = 1; classes[++c] = class }
+        db = db_name(FILENAME, class)
+        if (!(db in db_seen)) { db_seen[db] = 1; dbs[++n] = db }
+        next
+    }
+    { matches[db, db_name($1, class), class] = percent($2, $3) }
+    END {
+        for (i = 1; i <= n; i++) {
+            out = out_dir "/" dbs[i] ".csv"
+            line = "file"
+            for (k = 1; k <= c; k++) line = line "," classes[k]
+            printf "%s", line > out
+            for (j = 1; j <= n; j++) {
+                line = dbs[j]
+                for (k = 1; k <= c; k++) {
+                    line = line "," (i == j ? "" : matches[dbs[i], dbs[j], classes[k]])
+                }
+                # Newline before each row so the file has no trailing newline.
+                printf "\n%s", line > out
+            }
+            close(out)
+        }
+    }
+' "${CSV_FILES[@]}"
 
-    OUTPUT_DIR="$BASE_OUTPUT_DIR/$CLASS"
-    mkdir -p "$OUTPUT_DIR" || exit 1
-
-    for A_FILE in "${irr_files[@]}"; do
-        if [ "$A_FILE" == "apnic.db" ] || [ "$A_FILE" == "ripe.db" ]; then
-            A_FILE="$A_FILE.$CLASS"
-        fi
-        A_FILE_PATH="$INPUT_DIR/$CLASS/$A_FILE"
-        echo "Checking $A_FILE_PATH"
-
-        OUTPUT_CSV="$OUTPUT_DIR/$A_FILE.csv"
-        echo "file,found,not-found" > "$OUTPUT_CSV"
-
-        for B_FILE in "${irr_files[@]}"; do
-            if [ "$B_FILE" == "apnic.db" ] || [ "$B_FILE" == "ripe.db" ]; then
-                B_FILE="$B_FILE.$CLASS"
-            fi
-
-            if [ "$A_FILE" == "$B_FILE" ]; then
-                continue
-            fi
-
-            B_FILE_PATH="$INPUT_DIR/$CLASS/$B_FILE"
-
-            # Single awk pass: hash the dst file's lines once, then stream
-            # the A file doing O(1) lookups, instead of spawning one
-            # grep per A line that re-scans the whole B file.
-            # Match on FILENAME rather than NR==FNR, which breaks when the
-            # B file is empty (A's lines would be loaded into seen instead).
-            read -r FOUND NOT_FOUND <<< "$(awk '
-                FILENAME == ARGV[1] { seen[$0]=1; next }
-                ($0 in seen) { m++; next }
-                { n++ }
-                END { print m+0, n+0 }
-            ' "$B_FILE_PATH" "$A_FILE_PATH")"
-
-            echo "$B_FILE_PATH,$FOUND,$NOT_FOUND" >> "$OUTPUT_CSV"
-        done
-    done
-
-    echo "Finished comparing $CLASS"
-}
-
-PIDS=()
-
-# Background jobs in a script ignore SIGINT, so Ctrl-C would only kill this
-# parent. Run each job in its own process group (set -m) and kill every group,
-# including the awk processes they spawn, when interrupted.
-set -m
-# shellcheck disable=SC2329 # invoked via trap
-cleanup() {
-    trap - INT TERM
-    echo "Interrupted, stopping background jobs" >&2
-    for PID in "${PIDS[@]}"; do
-        kill -- "-$PID" 2>/dev/null || true
-    done
-    wait
-    exit 130
-}
-trap cleanup INT TERM
-
-for CLASS in "${classes[@]}"; do
-    check_class "$CLASS" &
-    PIDS+=("$!")
-done
-
-STATUS=0
-for PID in "${PIDS[@]}"; do
-    wait "$PID" || STATUS=1
-done
-
-echo "All comparisons completed"
-
-exit "$STATUS"
+echo "All matrixes created"

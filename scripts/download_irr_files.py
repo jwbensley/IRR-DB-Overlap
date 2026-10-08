@@ -322,7 +322,7 @@ def main() -> None:
             "https://ftp.apnic.net/apnic/dbase/data/jpnic.db.gz",
             "https://ftp.apnic.net/apnic/dbase/data/krnic.db.gz",
             "https://irr.lacnic.net/lacnic.db.gz",
-            "https://rr1.ntt.net/nttcomRR/nttcom.db.gz",
+            # "https://rr1.ntt.net/nttcomRR/nttcom.db.gz",
             "ftp://ftp.radb.net/radb/dbase/radb.db.gz",
             "https://ftp.ripe.net/ripe/dbase/split/ripe.db.as-set.gz",
             "https://ftp.ripe.net/ripe/dbase/split/ripe.db.aut-num.gz",
